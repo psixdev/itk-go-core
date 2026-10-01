@@ -1,7 +1,9 @@
 ## Запуск
 
 ### Разработка
+```sh
 export TASK=1 && air --build.cmd "go build -o ./tmp/main ./$TASK/main_$TASK.go" --build.bin "./tmp/main"
+```
 
 ## Задания по модулю Go-core
 
