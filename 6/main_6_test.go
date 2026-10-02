@@ -3,17 +3,17 @@ package main
 import (
 	"context"
 	"os"
+	"sync/atomic"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func stubGetRandomInt(callsCount *int) func(int) int {
-	*callsCount = 0
+func stubGetRandomInt(callsCount *atomic.Int64) func(int) int {
+	callsCount.Store(0)
 
 	return func(max int) int {
-		*callsCount++
-		return 8 - *callsCount
+		return 8 - int(callsCount.Add(1))
 	}
 }
 
@@ -37,7 +37,7 @@ func TestRandom(t *testing.T) {
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
-		var callsCount int
+		var callsCount atomic.Int64
 
 		oldFunc := getRandomInt
 		getRandomInt = stubGetRandomInt(&callsCount)
@@ -51,7 +51,13 @@ func TestRandom(t *testing.T) {
 			nums = append(nums, val)
 		}
 
-		assert.Equal(t, 6, callsCount)
+		cancel()
+
+		for range ch {
+			callsCount.Add(-1)
+		}
+
+		assert.Equal(t, 7, int(callsCount.Load()))
 		assert.Equal(t, []int{7, 6, 5, 4, 3}, nums)
 	})
 }
