@@ -24,11 +24,6 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-type printTestCase struct {
-	v   any
-	out string
-}
-
 func TestPrintType(t *testing.T) {
 	oldStdout := os.Stdout
 	defer func() { os.Stdout = oldStdout }()
@@ -52,7 +47,7 @@ func TestPrintType(t *testing.T) {
 			r, w, _ := os.Pipe()
 			os.Stdout = w
 
-			PrintType(tt.variable)
+			printType(tt.variable)
 
 			w.Close()
 
@@ -70,7 +65,7 @@ func TestPrintType(t *testing.T) {
 
 func TestJoinVariables(t *testing.T) {
 	t.Run("default case", func(t *testing.T) {
-		strVars := JoinVariables(
+		strVars := joinVariables(
 			numDecimal,
 			numOctal,
 			numHexadecimal,
@@ -84,7 +79,7 @@ func TestJoinVariables(t *testing.T) {
 	})
 
 	t.Run("another case", func(t *testing.T) {
-		strVars := JoinVariables(
+		strVars := joinVariables(
 			0,
 			01,
 			0x2,
@@ -110,7 +105,7 @@ func TestStrToRunes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			runes := StrToRunes(tt.str)
+			runes := strToRunes(tt.str)
 
 			assert.Equal(t, tt.expected, runes)
 		})
@@ -145,7 +140,7 @@ func TestHashRunes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			hash := HashRunes(tt.runes)
+			hash := hashRunes(tt.runes)
 
 			assert.Equal(t, tt.expected, hash)
 		})
