@@ -10,12 +10,12 @@ import (
 	"unicode/utf8"
 )
 
-func PrintType(variable any) {
+func printType(variable any) {
 	// fmt.Printf("%T\n", variable)
 	fmt.Println(reflect.TypeOf(variable))
 }
 
-func JoinVariables(
+func joinVariables(
 	numDecimal int,
 	numOctal int,
 	numHexadecimal int,
@@ -38,11 +38,11 @@ func JoinVariables(
 	)
 }
 
-func StrToRunes(str string) []rune {
+func strToRunes(str string) []rune {
 	return []rune(str)
 }
 
-func HashRunes(runes []rune) string {
+func hashRunes(runes []rune) string {
 	h := sha256.New()
 
 	buf := make([]byte, utf8.UTFMax)
@@ -72,15 +72,15 @@ func main() {
 	var isActive bool = true          // Тип bool
 	var complexNum complex64 = 1 + 2i // Тип complex64
 
-	PrintType(numDecimal)
-	PrintType(numOctal)
-	PrintType(numHexadecimal)
-	PrintType(pi)
-	PrintType(name)
-	PrintType(isActive)
-	PrintType(complexNum)
+	printType(numDecimal)
+	printType(numOctal)
+	printType(numHexadecimal)
+	printType(pi)
+	printType(name)
+	printType(isActive)
+	printType(complexNum)
 
-	strVars := JoinVariables(
+	strVars := joinVariables(
 		numDecimal,
 		numOctal,
 		numHexadecimal,
@@ -91,9 +91,9 @@ func main() {
 	)
 	fmt.Println("Строковое представление: " + strVars)
 
-	runes := StrToRunes(strVars)
+	runes := strToRunes(strVars)
 	fmt.Printf("Массив рун: %q\n", runes)
 
-	hash := HashRunes((runes))
+	hash := hashRunes((runes))
 	fmt.Printf("Хеш: %s\n", hash)
 }

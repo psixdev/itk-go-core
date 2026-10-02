@@ -5,11 +5,13 @@ import (
 	"math/rand/v2"
 )
 
+var getRandomInt = rand.IntN
+
 func createRandomSlice(length int, max int) []int {
 	slice := make([]int, length)
 
 	for i := 0; i < length; i++ {
-		slice[i] = rand.IntN(max)
+		slice[i] = getRandomInt(max)
 	}
 
 	return slice
@@ -27,7 +29,7 @@ func sliceExample(slice []int) []int {
 	return filtered
 }
 
-func addElements(slice []int, n int) []int {
+func addElement(slice []int, n int) []int {
 	result := make([]int, len(slice)+1)
 
 	copy(result, slice)
@@ -64,7 +66,7 @@ func main() {
 	filteredSlice := sliceExample(originalSlice)
 	fmt.Printf("%-20s %v\n", "filtered:", filteredSlice)
 
-	newElSlice := addElements(originalSlice, 2)
+	newElSlice := addElement(originalSlice, 2)
 	fmt.Printf("%-20s %v\n", "with new el:", newElSlice)
 
 	copiedSlice := copySlice(originalSlice)
