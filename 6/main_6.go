@@ -6,8 +6,14 @@ import (
 	"math/rand/v2"
 )
 
+var getRandomInt = rand.IntN
+
 func random(ctx context.Context, max int) <-chan int {
 	ch := make(chan int)
+
+	if max <= 0 {
+		panic("invalid max value")
+	}
 
 	go func() {
 		defer close(ch)
@@ -16,7 +22,7 @@ func random(ctx context.Context, max int) <-chan int {
 			select {
 			case <-ctx.Done():
 				return
-			case ch <- rand.IntN(max):
+			case ch <- getRandomInt(max):
 			}
 		}
 	}()
