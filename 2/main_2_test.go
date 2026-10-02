@@ -7,14 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var numDecimal int = 7            // Десятичная система
-var numOctal int = 0123           // Восьмеричная система
-var numHexadecimal int = 0x3B     // Шестнадцатиричная система
-var numFloat float64 = 9.75       // Тип float64
-var name string = "Harry"         // Тип string
-var isActive bool = false         // Тип bool
-var complexNum complex64 = 5 - 3i // Тип complex64
-
 func TestMain(m *testing.M) {
 	code := m.Run()
 
