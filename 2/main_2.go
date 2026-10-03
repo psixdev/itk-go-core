@@ -10,7 +10,7 @@ var getRandomInt = rand.IntN
 func createRandomSlice(length int, max int) []int {
 	slice := make([]int, length)
 
-	for i := 0; i < length; i++ {
+	for i := range length {
 		slice[i] = getRandomInt(max)
 	}
 
