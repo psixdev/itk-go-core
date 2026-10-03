@@ -49,7 +49,7 @@ func (wg *WaitGroup) Wait() {
 func main() {
 	var wg WaitGroup
 
-	for i := 0; i < 3; i++ {
+	for i := range 3 {
 		wg.Add(1)
 
 		go func() {
