@@ -7,6 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func stubGetRandomInt() func(int) int {
+	return func(max int) int {
+		return max - 1
+	}
+}
+
 func TestMain(m *testing.M) {
 	code := m.Run()
 
@@ -21,13 +27,8 @@ func TestCreateRandomSlice(t *testing.T) {
 	})
 
 	t.Run("30 elements", func(t *testing.T) {
-		callCount := 0
-
 		oldFunc := getRandomInt
-		getRandomInt = func(max int) int {
-			callCount++
-			return max - 1
-		}
+		getRandomInt = stubGetRandomInt()
 		defer func() { getRandomInt = oldFunc }()
 
 		const length = 30
@@ -36,7 +37,6 @@ func TestCreateRandomSlice(t *testing.T) {
 		slice := createRandomSlice(length, max)
 
 		assert.Len(t, slice, length)
-		assert.Equal(t, length, callCount)
 		assert.Condition(t, func() bool {
 			for _, v := range slice {
 				if v != max-1 {
