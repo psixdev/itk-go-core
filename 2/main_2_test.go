@@ -111,7 +111,7 @@ func TestRemoveElement(t *testing.T) {
 		slice := []int{}
 		rSlice := removeElement(slice, 2)
 
-		assert.Equal(t, []int(nil), rSlice)
+		assert.Empty(t, rSlice)
 	})
 
 	t.Run("non-empty slice", func(t *testing.T) {
